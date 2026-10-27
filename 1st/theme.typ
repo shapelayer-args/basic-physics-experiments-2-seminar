@@ -303,13 +303,19 @@
 ///   섹션 번호와 섹션명은 볼드, 소주제는 미디엄.
 /// - header: false이면 상단 머리말(섹션·발표 제목)을 숨긴다.
 /// - footer: false이면 쪽 번호를 숨긴다.
+/// - backdrop: 머리말·제목·본문보다 먼저 그려 맨 아래 층에 까는 내용.
+///   `video(…, fit: "page")`처럼 place()로 배치한 전면 요소에 쓴다.
 /// - ..body: 본문(0개 이상). `#slide[…]`, `#slide()` 모두 가능.
-#let slide(title: none, sub: none, header: true, footer: true, ..body) = {
+#let slide(title: none, sub: none, header: true, footer: true, backdrop: none, ..body) = {
   pagebreak(weak: true)
   set page(footer: none) if not footer
   // 높이 0 블록: 머리말을 띄우고, 내용이 없어도 페이지가 약한 페이지 나눔에
   // 흡수되지 않게 한다. 높이가 없으므로 제목 위치에는 영향이 없다.
-  block(width: 100%, height: 0pt, above: 0pt, below: 0pt, if header { header-bar(sub) })
+  // backdrop은 머리말·제목보다 먼저 그려 그 아래에 깔린다 (전면 영상·그림 등).
+  block(width: 100%, height: 0pt, above: 0pt, below: 0pt, {
+    if backdrop != none { backdrop }
+    if header { header-bar(sub) }
+  })
   if title != none {
     // 여러 줄 제목(`\`로 줄바꿈)은 제목용 좁은 줄 간격을 쓴다.
     block(below: 48pt, {

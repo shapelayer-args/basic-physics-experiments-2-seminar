@@ -1,3 +1,4 @@
+#import "packages/pptx-media/lib.typ": media
 #import "theme.typ": *
 
 #show: seminar-theme
@@ -6,6 +7,70 @@
 #let BE = $B_"Earth"$
 #let BM = $B_"manual"$
 #let mA = $"mA"$
+
+/// 동영상 첨부. typst-pptx로 내보내면 재생 가능한 비디오, 일반 Typst(PDF)에서는 썸네일.
+/// - name: assets/video/ 안의 파일 이름(확장자 제외). <name>.mp4 + <name>.thumb.png
+///   썸네일은 scripts/video-thumbnails.sh로 원본 해상도 PNG로 생성한다.
+/// - width/height: 하나만 주면 영상 비율로 나머지를 계산한다.
+///   둘 다 생략하면 남은 영역(가로·세로) 안에 비율을 유지한 채 최대 크기로 맞춘다.
+///   길이(pt), 비율(%), 조합(50% + 10pt) 모두 가능하며 %는 부모 영역 기준.
+/// - aspect: 가로/세로 비율(예: 16 / 9, 9 / 16, 4 / 3).
+///   기본(auto)은 썸네일의 픽셀 크기에서 읽는다. 썸네일은 ffmpeg가 회전 메타데이터까지
+///   반영한 실제 프레임이므로 세로 영상, 4:3, 정사각형도 그대로 맞는다.
+/// - fit: width/height를 둘 다 생략했을 때 맞출 영역.
+///   "rest"    제목 아래 남은 영역 (기본)
+///   "margin"  페이지 여백 안쪽 전체 (본문 영역 = 페이지 − 여백). 머리말·제목을 무시하고
+///             여백 상자에 꽉 차게 배치한다.
+///   "page"    슬라이드 전체(여백 무시, 가장자리까지). 머리말·제목·쪽 번호는 그대로 위에 그려진다.
+/// - ..playback: autoplay, loop, muted, volume (pptx-media 명세)
+#let video(name, width: auto, height: auto, aspect: auto, fit: "rest", ..playback) = {
+  assert(fit in ("rest", "margin", "page"), message: "fit must be rest, margin or page")
+  let src = "assets/video/" + name + ".mp4"
+  let thumb = "assets/video/" + name + ".thumb.png"
+  let play = (autoplay: true, loop: true, muted: true, ..playback.named())
+
+  // 가로/세로 비율: 명시값 > 썸네일 픽셀 크기
+  let ratio-of() = if aspect != auto { aspect } else {
+    let s = measure(image(thumb))
+    s.width / s.height
+  }
+  // 상대 길이(%)를 부모 영역 기준 절대 길이로
+  let resolve(v, full) = if type(v) == relative { v.ratio * full + v.length } else if type(v) == ratio { v * full } else { v }
+  let put(w, h) = media(src, thumbnail: path(thumb), width: w, height: h, playback: play)
+  // 영역(bw × bh) 안에 비율 r을 유지하며 최대로 (contain)
+  let contain(bw, bh, r) = if bw / r <= bh { (bw, bw / r) } else { (bh * r, bh) }
+
+  if width == auto and height == auto and fit != "rest" {
+    // 여백·페이지 크기는 context에서 읽는다. place()는 여백 상자의 좌상단 기준이며
+    // 흐름에서 공간을 차지하지 않으므로 머리말·제목·쪽 번호의 위치는 바뀌지 않는다.
+    // 본문보다 먼저 그려지도록 background 층에 두지 않고, 슬라이드 맨 앞에 호출하면 뒤에 깔린다.
+    context {
+      let m = page.margin
+      let side(k) = if type(m) == dictionary { m.at(k, default: m.at("rest", default: 0pt)) } else { m }
+      let abs(v, full) = { let v = resolve(v, full); if type(v) == length { v.to-absolute() } else { v } }
+      let pw = page.width
+      let ph = page.height
+      let (ml, mr, mt, mb) = (abs(side("left"), pw), abs(side("right"), pw), abs(side("top"), ph), abs(side("bottom"), ph))
+      let (bx, by, bw, bh) = if fit == "page" { (-ml, -mt, pw, ph) } else { (0pt, 0pt, pw - ml - mr, ph - mt - mb) }
+      let (w, h) = contain(bw, bh, ratio-of())
+      place(top + left, dx: bx + (bw - w) / 2, dy: by + (bh - h) / 2, put(w, h))
+    }
+  } else if width == auto and height == auto {
+    // 남은 영역 전체(1fr)를 잡은 뒤 그 안에 비율을 유지하며 맞춘다 (contain).
+    block(width: 100%, height: 1fr, layout(region => {
+      let (w, h) = contain(region.width, region.height, ratio-of())
+      align(center + horizon, put(w, h))
+    }))
+  } else {
+    layout(region => {
+      let r = ratio-of()
+      let w = resolve(width, region.width)
+      let h = resolve(height, region.height)
+      let (w, h) = if w == auto { (h * r, h) } else if h == auto { (w, w / r) } else { (w, h) }
+      put(w, h)
+    })
+  }
+}
 
 // ═════════════════════════════════════════════════════════════
 //  표지 · 목표
@@ -70,9 +135,9 @@
 #slide(title: align(horizon)[합성 자기장 $sum B$])[
   - 자기장의 합성 방향은 지구 자기장과 코일이 만드는 자기장의 합이다.
   #grid(
-    columns: 2,
+    columns: (1fr, 1fr),
     align: horizon,
-    inset: (x: 2em),
+    column-gutter: 24pt,
     [
       #eq(size: 30pt)[$ sum B = BE + BM $]
       #v(30pt)
@@ -113,15 +178,9 @@
 ]
 
 // ── 시각화 ──────────────────────────────────────────────────
-#slide(title: [시각화], sub: [관계식 계산])[
-  #v(30pt)
-  - $A$–$theta$ 관계를 직접 조작해 볼 수 있는 그래프 도구
-  #v(30pt)
-  #let url = "https://shapelayer-args.github.io/compass-ammeter-theoretical-graph-utils/"
-  #align(center, text(size: 22pt, link(url, url.trim("https://", at: start).trim("/", at: end))))
-  // TODO: 도구 화면 캡처 placeholder
-  // #align(center, image("assets/graph-utils.png", height: 180pt))
-]
+#slide(title: [기대 상황], backdrop: video("vectors-animation", fit: "page"))
+
+#slide(title: [기대 상황], backdrop: video("compass-animation", fit: "page"))
 
 #blank-slide()
 
@@ -266,9 +325,7 @@
 ]
 
 #slide(title: [실험 결과])[
-  // TODO: 실험 영상 placeholder (KakaoTalk_Video_2026-10-23-00-22-13.mp4)
-  //       PDF에는 영상이 들어가지 않으므로 대표 프레임 캡처 + 링크로 대체
-  // #align(center, image("assets/experiment-frame.png", height: 320pt))
+  #align(center, video("implementation", height: 340pt, muted: false, volume: 0.8))
 ]
 
 #blank-slide()
