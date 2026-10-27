@@ -43,9 +43,9 @@
             <path d="M 30 70 L 30 10 L 160 10" fill="none" stroke="#141413" stroke-miterlimit="10" stroke-dasharray="3 3"/>
           </g>
         </g>
-        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-9"><text x="207" y="85" text-anchor="middle" dominant-baseline="central" font-family="Pretendard, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#141413">Origin</text>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-9"><text x="207" y="85" text-anchor="middle" dominant-baseline="central" font-family="Pretendard, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#141413">R_coil (I_coil)</text>
         </g>
-        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-10"><text x="207" y="35" text-anchor="middle" dominant-baseline="central" font-family="Pretendard, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#141413">Adjuster</text>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-10"><text x="207" y="35" text-anchor="middle" dominant-baseline="central" font-family="Pretendard, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#141413">R_shunt (I_shunt)</text>
         </g>
       </g>
     </g>

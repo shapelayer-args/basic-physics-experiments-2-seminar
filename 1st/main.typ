@@ -117,39 +117,50 @@
 
 // ── 관계식 계산 ──────────────────────────────────────────────
 #slide(title: [들어가기에 앞서])[
-  #set text(size: 28pt)
+  #set text(size: 24pt)
+  #v(-15mm)
   #align(horizon)[
     - 표기법 정의
-    #v(40pt)
+    #v(10pt)
     #align(center, grid(
       columns: 2,
       align: center + horizon,
       column-gutter: 12pt,
-      text(size: 34pt)[$B(A)$],
-      text(size: 24pt)[\= 전류 $A$에 대해, 나침반에 감긴 도선이 유도하는 자기장의 세기],
+      text(size: 34pt)[$BM(I) = k I$],
+      text(size: 24pt)[\= 코일 전류 $I$에 비례하는 코일 자기장 성분 ($k > 0$)],
     ))
-    #v(40mm)
+    #v(20pt)
+    - $I$: 전류 ($"mA"$)
+    #v(6pt)
+    - #BE: 지구 자기장의 수평 성분 크기
+      #v(4pt)
+      #text(size: 0.8em)[- 연직 방향을 z축으로 설정할 때, xz 평면]
+    #v(6pt)
+    - 코일 자기장은 수평#super[xz평면], 지구 자기장의 수평 성분과 수직으로 배치
+    #v(6pt)
+    - $theta$: 자북으로부터의 수평 회전각
+    #v(6pt)
   ]
 ]
 
-#slide(title: align(horizon)[합성 자기장 $sum B$])[
-  - 자기장의 합성 방향은 지구 자기장과 코일이 만드는 자기장의 합이다.
+#slide(title: align(horizon)[합성 자기장 $arrow(B)_"total"$])[
+  - 바늘의 수평 방향을 결정하는 자기장은 두 수평 자기장의 벡터 합이다.
   #grid(
     columns: (1fr, 1fr),
     align: horizon,
     column-gutter: 24pt,
     [
-      #eq(size: 30pt)[$ sum B = BE + BM $]
+      #eq(size: 26pt)[$ arrow(B)_"total" = arrow(B)_"Earth" + arrow(B)_"manual" $]
       #v(30pt)
-      #eq(size: 30pt)[$ A arrow.t quad => quad BM arrow.t quad => quad theta arrow.t $]
+      #eq(size: 26pt)[$ I arrow.t quad => quad BM(I) arrow.t quad => quad theta arrow.t $]
     ],
     [#image("assets/img/compass-vectors_default.png", height: 67%)]
   )
   
 ]
 
-#slide(title: [입력 $A$, 출력 $theta$인 시스템])[
-  - 합성 자기장 $sum B$를 $A$를 입력, $theta$를 출력으로 삼는 시스템으로 고려할 때
+#slide(title: [입력 $I$, 출력 $theta$인 시스템])[
+  - 전류 $I$를 입력, 합성 자기장에 정렬된 바늘의 각도 $theta$를 출력으로 삼을 때
   #v(10pt)
   #grid(
     columns: (1fr, 1fr),
@@ -159,16 +170,16 @@
       #align(center)[〈기대 가능한 입출력 범위〉]
       #v(10pt)
       #eq(size: 24pt)[$
-        theta = -pi / 2 & quad => quad A -> -infinity \
-        theta = 0 & quad => quad A = 0 \
-        theta = pi / 2 & quad => quad A -> infinity
+        I -> -infinity & quad => quad theta -> -pi / 2 \
+        I = 0 & quad => quad theta = 0 \
+        I -> infinity & quad => quad theta -> pi / 2
       $]
     ],
     {
       set text(size: 18pt)
-      [이 시스템의 중간 단계 메커니즘으로 동작하는 #BE 와 #BM 은 $theta$에 관해]
+      [스프링과 마찰을 무시한 평형에서, 두 수평 자기장과 $theta$의 관계는]
       v(4pt)
-      eq(size: 28pt)[$ tan theta = BM / BE $]
+      eq(size: 28pt)[$ tan theta = BM(I) / BE $]
     },
   )
   #v(20pt)
@@ -272,21 +283,21 @@
 
 #slide(title: [관계식을 이용한 추정])[
   #set text(size: 18pt)
-  #quote(indent: 0pt)[위의 기준전류 외의 다른 값의 전류가 흐를 때 나침반 바늘이 얼마나 회전할지 예측해보자. 위의 나침반 각도는 "기준전류가 만든 자기장"과 "지구 자기장"의 비율에 의해 결정된 것임을 생각하라! 회로에 흐르는 전류가 100mA일 때와 250mA일 때, 자기장은 어떻게 형성될 것인가? 바늘은 어떻게 될것인가?]
+  #quote(indent: 0pt)[위의 기준전류 외의 다른 값의 전류가 흐를 때 나침반 바늘이 얼마나 회전할지 예측해보자. 위의 나침반 각도는 "기준전류가 만든 자기장"과 "지구 자기장"의 비율에 의해 결정된 것임을 생각하라! 회로에 흐르는 전류가 100 mA일 때와 250 mA일 때, 자기장은 어떻게 형성될 것인가? 바늘은 어떻게 될 것인가?]
   #v(6pt)
-  - 앞서 살펴본 입력 $A$, 출력 $theta$인 시스템으로 다른 전류 $A_"in"$에서의 $theta_"out"$을 찾을 수 있다.
+  - 앞서 살펴본 입력 $I$, 출력 $theta$인 시스템으로 다른 전류 $I_"in"$에서의 $theta_"out"$을 찾을 수 있다.
   \
   #grid(
     columns: 2,
     align: (horizon),
     inset: (x: 1em),
     [
-      - 측정: $theta = 45°$일 때 $BM = B(125 mA)$
+      - 측정: $I = 125 mA$일 때 $theta = 45°$
       #v(10pt)
       #align(center)[#eq[
         $
-          tan^(-1)(B(125 mA) \/ BE) = 45° quad\
-          => quad BE = B(125 mA)
+          tan^(-1)(BM(125 mA) \/ BE) = 45° quad\
+          => quad BE = BM(125 mA)
         $
       ]]
     ],
@@ -295,8 +306,8 @@
       #v(10pt)
       #align(center)[#eq[
         $
-          tan^(-1)(B(100 mA) \/ BE) & approx 38.7° \
-          tan^(-1)(B(250 mA) \/ BE) & approx 63.4°
+          tan^(-1)(BM(100 mA) \/ BE) & approx 38.7° \
+          tan^(-1)(BM(250 mA) \/ BE) & approx 63.4°
         $
       ]]
     ]
@@ -360,67 +371,72 @@
 
 // ── 해결 방안 #1 ────────────────────────────────────────────
 #slide(title: [사례 \#2의 해결 방안 1: \ 바늘 축에 스프링 추가])[
-  - 바늘 축에 스프링 상수 $kappa$를 추가해 각도에 비례하는 복원력 더하기
+  - 바늘 축에 비틀림 스프링을 추가해 각도에 비례하는 복원 토크 더하기
   #v(8pt)
-  #eq(size: 28pt)[$ BM (A) cos theta = BE sin theta + kappa theta $]
+  #eq(size: 28pt)[$ m BM(I) cos theta = m BE sin theta + kappa theta $]
+  #text(size: 18pt)[$m$: 바늘의 자기 쌍극자 모멘트 ($"A" dot "m"^2$),
+    $kappa$: 비틀림 상수 ($"N" dot "m" / "rad"$), $theta$: 라디안]
   #v(20pt)
   #text(size: 1.2em, weight: "semibold")[이 방안의 한계]
 
-  - 나침반 바늘의 응답은 비선형적이지만, 스프링 복원력은 선형적임
-    - 적절한 크기 범위에서는 선형에 근사하는 효과가 있음
-    - 지나치게 크거나 작은 값에서는 여전히 비선형적으로 표현됨
+  - 자기 토크의 각도 의존성은 비선형적이지만, 스프링 복원 토크는 선형적임
+  
+    - 작은 각도에서는 $I approx (BE + kappa \/ m) dot theta \/ k$로 선형 근사 가능
+    #v(2pt)
+    - 비선형성이 해결된 것은 아님: 큰 각도에서는 비선형성이 지배적임
 ]
 
 // ── 해결 방안 #2 ────────────────────────────────────────────
-#slide(title: [사례 \#2의 해결 방안 2: \ 코일 전류 크기 조정])[
+#slide(title: [#text(size: 30pt)[해결 방안 2 · 선형 근사] \ 코일 전류 크기 조정])[
+  #set text(size: 18pt)
   #grid(
     columns: (auto, 1fr),
     column-gutter: 40pt,
     align: horizon,
     [
       #set text(size: 24pt)
-      $B(A) = k dot A$, $BE = B(125 mA)$이므로
+      $BM(I) = k I$, $BE = BM(125 mA)$이므로
       #v(6pt)
       #eq(size: 24pt)[$
-        tan theta = BM (A) / BE = (k dot A) / (k dot 125 mA) = A / (125 mA)
+        tan theta = BM(I) / BE = I / (125 mA)
       $]
+      #text(size: 18pt)[원점 접선 근사: $tan theta approx theta$ ($theta$: 라디안)]
     ],
     data-table(
       columns: 4,
-      header: ([$theta$], [라디안 (직선 근사)], [$tan theta$], [비선형 오차율]),
+      header: ([$theta$], [라디안 (접선 근사)], [$tan theta$], [상대 오차]),
       [$10°$], [0.1745], [0.1763], [1.0%],
       [$20°$], [0.3491], [0.3640], [4.1%],
       [$30°$], [0.5236], [0.5774], [9.3%],
       [$45°$], [0.7854], [1.0000], [21.5%],
     ),
   )
-  #v(16pt)
-  - 오차율이 5% 이하인 $theta <= 20°$까지 「바늘의 각도와 전류가 선형 관계에 있다」고 근사
-  - $theta <= 20°$에 대응하는 전류
-    $tan 20° = A_"lin" / (125 mA)
-    quad => quad A_"lin" = 125 mA times 0.36397 approx 45.5 mA$
+  #v(8pt)
+  - 표의 상대 오차: $(tan theta - theta) \/ tan theta times 100%$ ($theta$: 라디안)
+  - 접선 근사 오차가 5% 이하인 $0 <= theta <= 20°$를 유효 범위로 선택
+  - 범위 끝의 실제 전류: $I_"lin" = 125 mA times tan 20° approx 45.5 mA$
 ]
 
-#slide(title: [#text(size: 30pt)[개선안 2-2] \ 유효 측정 범위와 스케일링 오프셋])[
-  - 선형성이 있다고 간주되는 $theta <= 20°$ 범위만을 유효한 측정 범위로 사용
-    - 수용 가능한 최대 전류 $A_"max"$를 가정하고 $theta = 20° => A_"max"$로 간주
+#slide(title: [#text(size: 30pt)[해결 방안 2] \ 유효 측정 범위])[
+  - $0 <= theta <= 20°$ 범위만을 유효한 측정 범위로 사용
+    - 목표 최대 전류 $I_"max" >= I_"lin"$에서 바늘이 $20°$를 가리키도록 설계
   \
-  - $theta in [0, 20°]$ 범위에 $[0, 45 mA]$ 대신 $[0, A_"max"]$를 표시하도록 비율 조정
+  - 코일 전류 $I_"coil" in [0, I_"lin"]$에 전체 전류 $I_"total" in [0, I_"max"]$가 대응하도록 분류
   #v(10pt)
   #grid(
     columns: (1fr, 1fr),
     align: horizon,
-    eq(size: 26pt)[$ O dot A_"origin" = A_"adjusted" $],
-    eq(size: 26pt)[$ O = A_"max" / A_"lin" = A_"max" / (45 mA) $],
+    eq(size: 26pt)[$ I_"total" = M I_"coil" $],
+    eq(size: 26pt)[$ M = I_"max" / I_"lin" approx I_"max" / (45.5 mA) $],
   )
   #v(14pt)
   #quote(indent: 0pt)[
-    오프셋 $O$: 아무 구현도 하지 않았을 때 $theta = 20°$의 전류와,
-    $theta = 20° => A_"max"$가 되도록 구현을 추가했을 때의 전류 사이의 비율
+    범위 확장 스케일러 $M$: 전체 전류를 코일 전류로 나눈 비율.
+    $M$을 입력 $I$ 에 적용---곱셉---하여 측정 가능한 전류 범위를 확대할 수 있다. 
   ]
 ]
 
-#slide(title: [#text(size: 30pt)[개선안 2-2] \ 병렬 회로])[
+#slide(title: [#text(size: 30pt)[해결 방안 2] \ 병렬 회로])[
   #grid(
     columns: (1fr, 1fr),
     column-gutter: 36pt,
@@ -430,73 +446,77 @@
     ],
     [
       #set text(size: 18pt)
-      - 병렬 경로에 특정한 값의 저항(분류기)을 달아 전체 전류 $A_"adjusted"$를
-        코일 경로 $A_"origin"$와 우회 경로 $A_"shunt"$로 분배
-        $ A_"adjusted" = A_"origin" + A_"shunt" $
+      - 병렬 경로에 특정한 값의 저항(분류기)을 달아 전체 전류 $I_"total"$을
+        코일 전류 $I_"coil"$과 분류기 전류 $I_"shunt"$로 분배
+        $ I_"total" = I_"coil" + I_"shunt" $
       
       \
 
-      - $theta <= 20°$에서만 움직이려면 코일로는 항상 $1 \/ O$만큼 줄어든 전류만 흘러야 함
-        $ A_"origin" = 1 / O A_"adjusted", quad
-          A_"shunt" = (O - 1) / O A_"adjusted" $
-        $ A_"origin" : A_"shunt" = 1 : (O - 1) $
+      - $0 <= I_"total" <= I_"max"$에서 코일로는 전체 전류의 $1 \/ M$만 흘러야 함
+        $ I_"coil" = 1 / M I_"total", quad
+          I_"shunt" = (M - 1) / M I_"total" $
+        $ I_"coil" : I_"shunt" = 1 : (M - 1) $
     ],
   )
 ]
 
-#slide(title: [#text(size: 30pt)[개선안 2-2] \ 병렬 저항 $R_"shunt"$ 결정])[
+#slide(title: [#text(size: 30pt)[해결 방안 2] \ 병렬 저항 $R_"shunt"$ 결정])[
   - 나침반 코일의 자체 저항을 $R_"coil"$로 정의
+  \
   - 병렬 회로의 양 갈래 전압이 같으므로, 전류의 비는 저항의 역비와 같다.
   #v(14pt)
   #eq(size: 24pt)[$
-    V_"coil" = V_"shunt" & quad => quad A_"origin" dot R_"coil" = A_"shunt" dot R_"shunt" \
-    & quad => quad 1 dot R_"coil" = (O - 1) dot R_"shunt" \
-    & quad => quad R_"shunt" = R_"coil" / (O - 1) = (45 mA) / (A_"max" - 45 mA) R_"coil"
+    V_"coil" = V_"shunt" & quad => quad I_"coil" R_"coil" = I_"shunt" R_"shunt" \
+    & quad => quad R_"coil" = (M - 1) R_"shunt" \
+    & quad => quad R_"shunt" = R_"coil" / (M - 1) = I_"lin" / (I_"max" - I_"lin") R_"coil"
   $]
 ]
 
-#slide(title: [#text(size: 30pt)[개선안 2-2] \ 설계 예시])[
+#slide(title: [#text(size: 30pt)[해결 방안 2] \ 설계 예시])[
   #v(10pt)
   #align(horizon)[
     #align(center, data-table(
       columns: 4,
-      size: 24pt,
+      size: 21pt,
       header: (
-        [목표 최대 전류 $A_"max"$],
-        [오프셋 $O = A_"max" / (45 mA)$],
-        [병렬 저항 $R_"shunt" = R_"coil" / (O - 1)$],
-        [$1°$당 전류 $A_"max" / (20°)$],
+        [목표 최대 전류 $I_"max"$],
+        [배율 $M = I_"max" / I_"lin"$],
+        [병렬 저항 $R_"shunt" = R_"coil" / (M - 1)$],
+        [등각도 간격 눈금의 $1°$당 전류 $I_"max" / (20°)$],
       ),
-      [$45 mA$ (기본)], [$1$], [$infinity$ (병렬 경로 개방)], [$2.25 mA\/°$],
-      [$250 mA$], [$5.56$], [$0.220 R_"coil"$], [$12.5 mA\/°$],
-      [$500 mA$], [$11.11$], [$0.0989 R_"coil"$], [$25.0 mA\/°$],
-      [$1000 mA$ ($1 "A"$)], [$22.22$], [$0.0471 R_"coil"$], [$50.0 mA\/°$],
+      [$I_"lin" approx 45.5 mA$ (기본)], [$1$], [개방 ($R_"shunt" -> infinity$)], [$2.27 mA\/°$],
+      [$250 mA$], [$5.49$], [$0.222 R_"coil"$], [$12.5 mA\/°$],
+      [$500 mA$], [$10.99$], [$0.100 R_"coil"$], [$25.0 mA\/°$],
+      [$1000 mA$ ($1 "A"$)], [$21.98$], [$0.0477 R_"coil"$], [$50.0 mA\/°$],
     ))
-    #v(30mm)
+    #v(25mm)
   ]
 ]
 
-#slide(title: [#text(size: 30pt)[개선안 2-2] \ 각도 $theta$로부터 전류 읽기])[
-  #text(size: 1.3em)[
-  - 코일 전류 $A_"origin"$에 의해 바늘은 $theta <= 20°$ 내에서 선형적으로 회전
+#slide(title: [#text(size: 30pt)[해결 방안 2] \ 각도 $theta$로부터 전류 읽기])[
+  #text(size: 22pt)[
+  - $I_"total" = M I_"coil" = M dot 125 mA dot tan theta$
   \
-  - 읽힌 각도 $theta$에 비례하여 전체 전류 $A_"adjusted"$를 계산
-  #v(25mm)
+  - $0°$에 $0 "mA"$, $20°$에 $I_"max" "mA"$를 대응시켜 전류 눈금을 등각도 간격으로 배치
+  #v(12pt)
   #eq(size: 28pt)[$
-    A_"adjusted" = O dot A_"origin"
-    approx O dot ((45 mA) / (20°) theta)
-    = (A_"max" / (20°)) theta
+    I_"read" = M dot (I_"lin" / (20°) theta)
+    = (I_"max" / (20°)) theta approx I_"total"
   $]
+  #v(20pt)
+  - $20°$에서 코일 전류가 약 $45.5 mA$이므로,\
+    등각도 간격 눈금에서는 코일 전류를 $1°$당 약 $2.27 mA$로 환산
   ]
 ]
 
-#slide(title: [#text(size: 30pt)[개선안 2-2] \ 한계], sub: [해결 방안 \#2])[
+#slide(title: [#text(size: 30pt)[해결 방안 2] \ 한계], sub: [해결 방안 \#2])[
   #v(20pt)
-  - $A_"max"$를 아무리 넓혀도 바늘의 물리적 가동 범위는 $theta in [0, 20°]$로 고정됨
+  - $I_"max"$를 늘려도 측정에 사용하는 바늘 각도는 $theta in [0, 20°]$로 고정됨
   #v(10pt)
   \
-  #callout(label: [얻은 것])[$tan theta$의 비선형성 제거 #sym.arrow.double 등간격 눈금]
-  #callout(label: [잃은 것])[최대 회전 반경이 $20°$로 좁아져 육안 측정 시 눈금 분해능(가독성) 저하]
+  #callout(label: [적용 이득])[작은 각도에서의 선형 근사와 등각도 간격 눈금, 분류기에 의해 측정 가능 범위의 확장]
+  #callout(label: [남은 한계])[비선형성 --- 의도된 사용 시나리오에서, 눈금의 최대 표시 오차는 전체 눈금의 약 1.60%]
+  #callout(label: [적용 손실])[최대 측정 각도가 $20°$로 좁아져 육안 측정 시 눈금 분해능(가독성) 저하]
 ]
 
 #blank-slide()
