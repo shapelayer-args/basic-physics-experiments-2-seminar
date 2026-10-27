@@ -269,32 +269,9 @@
     counter(page).display())
 }
 
-/// 일반 내용 슬라이드: 좌상단 44pt 제목 + 본문.
-/// 모든 인자는 선택이다. `#slide()`는 머리말·쪽 번호만 있는 빈 슬라이드가 된다.
-/// - title: 슬라이드 제목. 생략하면 제목 없이 본문이 맨 위부터 시작한다.
-/// - sub: 섹션 안의 소주제. 제목 위 머리말에 "#n 섹션명 · 소주제"로 표시된다.
-///   섹션 번호와 섹션명은 볼드, 소주제는 미디엄.
-/// - header: false이면 상단 머리말(섹션·발표 제목)을 숨긴다.
-/// - footer: false이면 쪽 번호를 숨긴다.
-/// - ..body: 본문(0개 이상). `#slide[…]`, `#slide()` 모두 가능.
-#let slide(title: none, sub: none, header: true, footer: true, ..body) = {
-  pagebreak(weak: true)
-  set page(footer: none) if not footer
-  box() // 내용이 없어도 페이지가 약한 페이지 나눔에 흡수되지 않도록
-  if header { header-bar(sub) }
-  if title != none {
-    // 여러 줄 제목(`\`로 줄바꿈)은 제목용 좁은 줄 간격을 쓴다.
-    block(below: 48pt, {
-      set par(leading: 0.5em)
-      sans(size: sizes.title, weight: "semibold", title)
-    })
-  }
-  body.pos().join()
-}
-
-/// 빈 슬라이드. 머리말·쪽 번호까지 모두 없는 완전히 빈 페이지.
-/// 내용을 주면 그대로 배치한다(전체 화면 그림 등).
-#let blank-slide(..body) = slide(header: false, footer: false, ..body)
+/// 상단 머리말: 좌측 "#n 섹션명 · 소주제", 우측 발표 제목.
+#let header-bar(sub) = {
+  place(top + left, dy: -36pt, context {
     let section = current-section.get()
     let parts = ()
     if section != none {
@@ -317,6 +294,22 @@
       sans(size: sizes.caption, weight: "medium", fill: colors.muted, t)
     }
   })
+}
+
+/// 일반 내용 슬라이드: 좌상단 44pt 제목 + 본문.
+/// 모든 인자는 선택이다. `#slide()`는 머리말·쪽 번호만 있는 빈 슬라이드가 된다.
+/// - title: 슬라이드 제목. 생략하면 제목 없이 본문이 맨 위부터 시작한다.
+/// - sub: 섹션 안의 소주제. 제목 위 머리말에 "#n 섹션명 · 소주제"로 표시된다.
+///   섹션 번호와 섹션명은 볼드, 소주제는 미디엄.
+/// - header: false이면 상단 머리말(섹션·발표 제목)을 숨긴다.
+/// - footer: false이면 쪽 번호를 숨긴다.
+/// - ..body: 본문(0개 이상). `#slide[…]`, `#slide()` 모두 가능.
+#let slide(title: none, sub: none, header: true, footer: true, ..body) = {
+  pagebreak(weak: true)
+  set page(footer: none) if not footer
+  // 높이 0 블록: 머리말을 띄우고, 내용이 없어도 페이지가 약한 페이지 나눔에
+  // 흡수되지 않게 한다. 높이가 없으므로 제목 위치에는 영향이 없다.
+  block(width: 100%, height: 0pt, above: 0pt, below: 0pt, if header { header-bar(sub) })
   if title != none {
     // 여러 줄 제목(`\`로 줄바꿈)은 제목용 좁은 줄 간격을 쓴다.
     block(below: 48pt, {
@@ -324,8 +317,12 @@
       sans(size: sizes.title, weight: "semibold", title)
     })
   }
-  body
+  body.pos().join()
 }
+
+/// 빈 슬라이드. 머리말·쪽 번호까지 모두 없는 완전히 빈 페이지.
+/// 내용을 주면 그대로 배치한다(전체 화면 그림 등).
+#let blank-slide(..body) = slide(header: false, footer: false, ..body)
 
 /// 섹션 구분 슬라이드: "섹션 #n" 라벨 + 60pt 섹션명 + 선택적 부연 설명.
 #let section-slide(title, body) = {
@@ -355,13 +352,6 @@
     ))
   }
   sans(size: sizes.title, weight: "semibold", fill: colors.inverse-text, body)
-}
-
-/// 빈 슬라이드(그림·도식 자리).
-#let blank-slide(body) = {
-  pagebreak(weak: true)
-  box() // 빈 페이지가 약한 페이지 나눔에 흡수되지 않도록
-  body
 }
 
 /// 표지 슬라이드. 원본 좌표를 그대로 따르도록 절대 위치로 배치한다.
