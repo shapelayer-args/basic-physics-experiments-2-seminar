@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="403px" height="183px" viewBox="0 0 403 183">
+  <g>
+    <g data-cell-id="0">
+      <g data-cell-id="1">
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-6">
+          <g transform="translate(0.5,0.5)">
+            <path d="M 30 170 L 30 180 L 400 180 L 400 150" fill="none" stroke="#141413" stroke-miterlimit="10"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-1">
+          <g transform="translate(0.5,0.5)">
+            <path d="M -20 120 L 25 120 M 35 90 L 35 150 M 25 90 L 25 150 M 35 120 L 80 120 M 10 95 L 10 105 M 5 100 L 15 100" fill="none" stroke="#141413" stroke-miterlimit="10" transform="rotate(-90,30,120)"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-8">
+          <g transform="translate(0.5,0.5)">
+            <path d="M 260 10 L 400 10 L 400 60" fill="none" stroke="#141413" stroke-miterlimit="10" stroke-dasharray="3 3"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-2">
+          <g transform="translate(0.5,0.5)">
+            <path d="M 160 10 L 178 10 L 182 0 L 190 20 L 198 0 L 206 20 L 214 0 L 222 20 L 230 0 L 238 20 L 242 10 L 260 10" fill="none" stroke="#141413" stroke-miterlimit="10"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-5">
+          <g transform="translate(0.5,0.5)">
+            <path d="M 257 60 L 400 60 L 400 150" fill="none" stroke="#141413" stroke-miterlimit="10"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-3">
+          <g transform="translate(0.5,0.5)">
+            <path d="M 157 60 L 175 60 L 179 50 L 187 70 L 195 50 L 203 70 L 211 50 L 219 70 L 227 50 L 235 70 L 239 60 L 257 60" fill="none" stroke="#141413" stroke-miterlimit="10"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-4">
+          <g transform="translate(0.5,0.5)">
+            <path d="M 30 70 L 30 60 L 157 60" fill="none" stroke="#141413" stroke-miterlimit="10"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-7">
+          <g transform="translate(0.5,0.5)">
+            <path d="M 30 70 L 30 10 L 160 10" fill="none" stroke="#141413" stroke-miterlimit="10" stroke-dasharray="3 3"/>
+          </g>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-9"><text x="207" y="85" text-anchor="middle" dominant-baseline="central" font-family="Pretendard, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#141413">Origin</text>
+        </g>
+        <g data-cell-id="ylPXN8GA-Qo4tzjTGnbO-10"><text x="207" y="35" text-anchor="middle" dominant-baseline="central" font-family="Pretendard, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#141413">Adjuster</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

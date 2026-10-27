@@ -1,1 +1,4 @@
 .DS_Store
+
+# 글꼴 바이너리(약 120MB) — scripts/fetch-fonts.sh 또는 ~/Library/Fonts에서 복사
+fonts/
