@@ -352,7 +352,7 @@
   #cols(
     case[
       사례\#1\
-      #text(size: 1.1em, weight: "semibold")[팀의 구현에서만 발생한 경우]
+      #text(size: 1.1em, weight: "semibold")[팀의 결과물에서만 발생한 경우]
     ][
       - 나침반이 자북에 잘 정렬된 상태가 아님
       - 다만 일관된 각도로 틀어져 있었으므로,\
