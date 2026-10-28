@@ -191,7 +191,7 @@
 // ── 시각화 ──────────────────────────────────────────────────
 #slide(title: [기대 상황], backdrop: video("vectors-animation", fit: "page"))
 
-#slide(title: [기대 상황], backdrop: video("compass-animation", fit: "page"))
+#slide(title: text(fill: palette.slate-250)[기대 상황], backdrop: video("compass-animation", fit: "page"))
 
 #blank-slide()
 
